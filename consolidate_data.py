@@ -27,6 +27,9 @@ def process_horaires():
     horaires = horaires.groupby([horaires['time'].dt.to_period('H'), 'ligne', 'station']).count()
     horaires = horaires.drop(labels = ['time'], axis = 1)
     horaires = horaires.reset_index()
+    horaires = pd.pivot_table(horaires, values ='stop_id',index = ['time','station'], columns = ['ligne'])
+    horaires = horaires.reset_index()
+    horaires = horaires.fillna(0)
     return horaires
 
 def process_meteo():
