@@ -45,6 +45,27 @@ def process_air_quality():
 
     return air_quality
 
+def process_holiday():
+    # processing air_quality
+    holidays = pd.read_csv('holidays.csv')
+    holidays['holiday'] = 1
+    holidays['date'] = pd.to_datetime(holidays[['year','month','day']]).dt.strftime("%Y-%m-%d")
+    holidays = holidays.drop(labels = ['holidays','year','month','day'], axis = 1)
+    return holidays
+
+def process_celebrations():
+    # processing air_quality
+    celebration = pd.read_csv('celebration.csv')
+    celebration['celebration'] = 1
+    celebration['date'] = pd.to_datetime(celebration[['year','month','day']]).dt.strftime("%Y-%m-%d")
+    celebration = celebration.drop(labels = ['event','type','year','month','day'], axis = 1)
+    return celebration
+
+celebration = process_celebrations()
+holiday = process_holiday()
+
+
+
 meteo = process_meteo()
 
 horaires = process_horaires()
@@ -53,6 +74,11 @@ horaires['time'] = horaires['time'].dt.strftime(date_format='%H:%M:%S')
 air_quality = process_air_quality()
 
 data = air_quality.merge(right = meteo, how = 'left', on = ['date'], left_index= False, right_index= False)
-data = data.merge(right = horaires, how = 'inner', on = ['time','station'], left_index= False, right_index= False)
+data = data.merge(right = holiday, how = 'left', on = ['date'], left_index= False, right_index= False)
+data = data.merge(right = celebration, how = 'left', on = ['date'], left_index= False, right_index= False)
 
+
+data = data.merge(right = horaires, how = 'inner', on = ['time','station'], left_index= False, right_index= False)
+data['celebration'] = data['celebration'].fillna(0)
+data['holiday'] = data['holiday'].fillna(0)
 data.to_csv('all_data.csv', index = False)
