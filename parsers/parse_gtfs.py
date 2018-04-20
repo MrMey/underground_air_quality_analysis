@@ -8,8 +8,9 @@ stations = {'Châtelet':'chatelet',
             'Châtelet-Les Halles':'chatelet',
             'Franklin-Roosevelt':'franklin',
             'Auber':'auber',
-            'Havre-Caumartin':'auber'}
-lignes = ['1','3','4','7','9','11','14','a','b']
+            'Havre-Caumartin':'auber',
+            'Opéra':'auber'}
+lignes = ['1','3','4','7','8','9','11','14','a','b']
 
 
 

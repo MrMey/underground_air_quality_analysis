@@ -13,6 +13,9 @@ __pycache__/
 # idea folder
 .idea/
 
+# horaires
+horaires/
+
 # Distribution / packaging
 .Python
 env/
