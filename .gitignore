@@ -9,6 +9,7 @@ __pycache__/
 
 # csv extensions
 *.csv
+!all_data.csv
 
 # idea folder
 .idea/
